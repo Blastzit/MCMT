@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block header %}
+  Meet The Team
+{% endblock header %}
+{% block content %}
+  <p>Paragraph</p>
+  <div class="py-4">
+    <h4 class="py-4 text-xl font-semibold">Design & Development</h4>
+    <p>Paragraph</p>
+    <div class="py-10 px-4 mx-auto max-w-screen-xl text-center lg:px-6">
+      <div class="grid gap-8 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div class="object-cover text-center text-gray-500">
+          <img class="mx-auto mb-4 w-24 h-24 rounded-full"
+               src="{% static 'images/ioanna.jpeg' %}"
+               alt="Dr. Ioanna Papatsouma">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">Dr. Ioanna Papatsouma</a>
+          </h3>
+          <p></p>
+        </div>
+        <div class="text-center text-gray-500">
+          <img class="object-cover mx-auto mb-4 w-24 h-24 rounded-full"
+               src="{% static 'icons/default-avatar.webp' %}"
+               alt="Dr. Samuel J Brzezicki">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">Dr. Samuel Brzezicki</a>
+          </h3>
+          <p></p>
+        </div>
+        <div class="text-center text-gray-500">
+          <img class="object-cover mx-auto mb-4 w-24 h-24 rounded-full"
+               src="{% static 'icons/default-avatar.webp' %}"
+               alt="Dr. Samuel J Brzezicki">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">Dr. Christopher Hallsworth</a>
+          </h3>
+          <p></p>
+        </div>
+        <div class="hidden xl:block"></div>
+        <div class="hidden lg:block"></div>
+        <div class="text-center text-gray-500">
+          <img class="object-cover mx-auto mb-4 w-24 h-24 rounded-full scale"
+               src="{% static 'images/bendit.jpeg' %}"
+               alt="Bendit Chan">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">Bendit Chan</a>
+          </h3>
+          <p>MSci Mathematics ('25)</p>
+        </div>
+        <div class="text-center text-gray-500">
+          <img class="object-cover mx-auto mb-4 w-24 h-24 rounded-full"
+               src="{% static 'icons/default-avatar.webp' %}"
+               alt="Natasha Johnson">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">Natasha Johnson</a>
+          </h3>
+          <p></p>
+        </div>
+        <div class="text-center text-gray-500">
+          <img class="object-cover mx-auto mb-4 w-24 h-24 rounded-full"
+               src="{% static 'icons/default-avatar.webp' %}"
+               alt="James Corcoran">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">James Corcoran</a>
+          </h3>
+          <p></p>
+        </div>
+        <div class="text-center text-gray-500">
+          <img class="object-cover mx-auto mb-4 w-24 h-24 rounded-full"
+               src="{% static 'images/christine.jpg' %}"
+               alt="Peiyu Zhang">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">Peiyu Zhang</a>
+          </h3>
+          <p>BSc Mathematics with Statistics ('25)</p>
+        </div>
+        <div class="text-center text-gray-500">
+          <img class="object-cover mx-auto mb-4 w-24 h-24 rounded-full"
+               src="{% static 'icons/default-avatar.webp' %}"
+               alt="Nikolas Mavrotheris">
+          <h3 class="mb-1 text-lg font-semibold tracking-tight text-gray-900">
+            <a href="#">Nikolas Mavrotheris</a>
+          </h3>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block header %}
+  <div class="inline-flex items-center gap-1 flex-wrap">
+    {{ module.name }}
+    <span class="text-gray-600 font-light text-sm me-2 pt-1">{{ module.code }}</span>
+    <div class="pb-0.5">
+      {% if module.compulsory %}
+        <span class="bg-gray-100 text-gray-700 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full border border-gray-400">Core</span>
+      {% endif %}
+      {% if module.category == "Pure" %}
+        <span class="bg-blue-100 text-blue-700 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full border border-blue-400">Pure</span>
+      {% elif module.category == "Applied" %}
+        <span class="bg-green-100 text-green-700 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full border border-green-400">Applied</span>
+      {% elif module.category == "Statistics" %}
+        <span class="bg-red-100 text-red-700 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full border border-red-400">Statistics</span>
+      {% elif module.category == "Finance" %}
+        <span class="bg-yellow-100 text-yellow-700 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full border border-yellow-400">Finance</span>
+      {% endif %}
+    </div>
+  </div>
+{% endblock header %}
+{% block content %}
+  <p>
+    <strong>Term:</strong> {{ module.term }}
+  </p>
+  <p>
+    <strong>Module Lead(s):</strong> {{ module.lecturer }}
+  </p>
+  {% if module.summary %}
+    <p>
+      <strong>Summary:</strong> {{ module.summary }}
+    </p>
+  {% endif %}
+  {% if module.learning_outcome %}
+    <p>
+      <strong>Learning Outcome:</strong> {{ module.learning_outcome }}
+    </p>
+  {% endif %}
+  {% if module.module_preparation %}
+    <p>
+      <strong>Module Preparation:</strong> {{ module.module_preparation }}
+    {% endif %}
+    {% if module.assessments %}
+      <p>
+        <strong>Assessments:</strong> {{ module.assessments }}
+      </p>
+      {% if assessments %}
+        <table class="table-auto w-full text-left">
+          <thead>
+            <tr class="border-b-2">
+              <th class="px-4 py-2">Coursework</th>
+              <th class="px-4 py-2">Start Date</th>
+              <th class="px-4 py-2">End Date</th>
+              <th class="px-4 py-2">Value</th>
+              <th class="px-4 py-2">Submit Work To</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for assessment in assessments %}
+              <tr class="border-b">
+                <td class="px-4 py-2">{{ assessment.coursework_name }}</td>
+                <td class="px-4 py-2">{{ assessment.start_date }}</td>
+                <td class="px-4 py-2">{{ assessment.end_date }}</td>
+                <td class="px-4 py-2">{{ assessment.value }}%</td>
+                <td class="px-4 py-2">{{ assessment.submit_work_to }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    {% endif %}
+    {% if module.recommended_prerequisites %}
+      <p>
+        <strong>Recommended Prerequisites:</strong> {{ module.recommended_prerequisites }}
+      </p>
+    {% endif %}
+  {% endblock content %}

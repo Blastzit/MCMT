@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+{% block header %}
+  <div class="flex w-full">
+    <span class="flex items-center flex-grow">
+      Module Dashboard
+      <div class="text-center">
+        <button class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 ml-4 focus:outline-none"
+                type="button"
+                data-drawer-target="drawer-navigation"
+                data-drawer-show="drawer-navigation"
+                data-drawer-backdrop="false"
+                aria-controls="drawer-navigation">Filter</button>
+      </div>
+    </span>
+    <span class="relative">
+      <button id="hide-button"
+              class="absolute right-0 bg-gray-200 text-gray-500 font-medium text-sm rounded-lg px-3 py-1 ml-4">
+        Hide
+      </button>
+      <button id="unhide-button"
+              class="hidden absolute right-0 bg-gray-200 text-gray-500 font-medium text-sm rounded-lg px-3 py-1 ml-4">
+        Unhide
+      </button>
+    </span>
+  </div>
+{% endblock header %}
+{% block content %}
+  <div id="drawer-navigation"
+       class="fixed top-0 left-0 z-40 w-96 h-full p-4 overflow-y-auto transition-transform -translate-x-full bg-white border-r shadow-md"
+       tabindex="-1"
+       aria-labelledby="drawer-navigation-label">
+    <h5 id="drawer-navigation-label"
+        class="text-base font-semibold text-gray-500 uppercase">Dashboard Filters</h5>
+    <button type="button"
+            data-drawer-hide="drawer-navigation"
+            aria-controls="drawer-navigation"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center">
+      <svg aria-hidden="true"
+           class="w-5 h-5"
+           fill="currentColor"
+           viewBox="0 0 20 20"
+           xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd">
+        </path>
+      </svg>
+      <span class="sr-only">Close menu</span>
+    </button>
+    <div class="py-4 overflow-y-auto">
+      <p class="text-base font-normal text-gray-500 mb-5 pb-3 border-b border-gray-300">Description text?</p>
+      <form method="get" class="space-y-6">
+        <div class="mb-6">
+          <label for="choose_modules"
+                 class="block text-sm font-semibold text-gray-700 mb-2">Select Modules</label>
+          <div class="relative">
+            <div class="flex flex-wrap items-center border border-gray-300 rounded-md px-2"
+                 id="choose_modules_input">
+              {% if choose_modules %}
+                {% for module in choose_modules %}
+                  <button type="button"
+                          class="px-1 py-0.5 m-1 mr-2 ml-0 text-sm rounded-md border border-gray-300 flex items-center"
+                          onclick="removeModule('{{ module }}')">
+                    {{ module }}
+                    <span class="ml-1 text-xs">&times;</span>
+                  </button>
+                {% endfor %}
+              {% endif %}
+              <input type="text"
+                     id="module_search_input"
+                     class="flex-grow outline-none border-none focus:ring-0 w-0"
+                     readonly
+                     placeholder="">
+            </div>
+            <div id="dropdown"
+                 class="absolute p-2 z-10 w-full bg-white border border-gray-300 rounded-md mt-2 hidden">
+              <input type="text"
+                     id="dropdown_search"
+                     class="w-full px-3 py-2 border-b border-gray-300 rounded-md mb-2"
+                     placeholder="Search...">
+              <ul class="max-h-60 overflow-auto">
+                {% for module in modules %}
+                  <li class="px-1 py-1 text-sm hover:bg-gray-200 cursor-pointer"
+                      data-value="{{ module }}">{{ module }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <input type="hidden"
+                 id="choose_modules"
+                 name="choose_modules"
+                 value="{{ choose_modules|join:',' }}">
+        </div>
+        <div class="mb-6 pb-6 border-b border-gray-300">
+          <label for="search_term"
+                 class="block text-sm font-semibold text-gray-700 mb-2">Search Keywords</label>
+          <input type="text"
+                 id="search_term"
+                 name="search_term"
+                 value="{{ search_term }}"
+                 class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <div class="mb-6">
+          <label for="year" class="block mb-2 text-sm font-medium text-gray-700">Select Year</label>
+          <div class="flex flex-wrap">
+            {% for year in years %}
+              <div class="flex items-center me-4">
+                <input id="year{{ forloop.counter }}"
+                       type="checkbox"
+                       name="year"
+                       value="{{ year }}"
+                       {% if year in selected_years %}checked{% endif %}
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                <label for="year{{ forloop.counter }}" class="ms-1 text-gray-900">{{ year }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mb-6">
+          <label for="term" class="block mb-2 text-sm font-medium text-gray-700">Select Term</label>
+          <div class="flex flex-wrap">
+            {% for term in terms %}
+              <div class="flex items-center me-4">
+                <input id="{{ term|lower }}"
+                       type="checkbox"
+                       name="term"
+                       value="{{ term }}"
+                       {% if term in selected_terms %}checked{% endif %}
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                <label for="{{ term|lower }}" class="ms-1 text-gray-900">{{ term }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mb-6 pb-6 border-b border-gray-300">
+          <label for="category" class="block mb-2 text-sm font-medium text-gray-700">Select Category</label>
+          <div class="flex flex-wrap">
+            {% for category in categories %}
+              <div class="flex items-center me-4">
+                <input id="{{ category|lower }}"
+                       type="checkbox"
+                       name="category"
+                       value="{{ category }}"
+                       {% if category in selected_categories %}checked{% endif %}
+                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                <label for="{{ category|lower }}" class="ms-1 text-gray-900">{{ category }}</label>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <button type="submit"
+                id="submit-button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium text-sm rounded-lg px-4 py-2">
+          Apply Filters
+        </button>
+        <button type="reset"
+                id="reset-button"
+                class="text-gray-700 font-medium text-sm rounded-lg px-4 py-2">Reset</button>
+      </form>
+    </div>
+  </div>
+  <div class="relative flex-1 flex h-[calc(100vh-13rem)] w-full">
+    <div id="left-side"
+         class="z-10 bg-white w-full xl:w-1/2 pr-4 overflow-y-auto transition-all duration-500 ease-in-out no-scrollbar">
+      {% include "modules/module_list.html" with modules=filtered_modules chosen=choose_modules_obj %}
+    </div>
+    <div id="right-side"
+         class="absolute right-0 top-0 h-full w-full xl:w-1/2 pl-4 transition-all duration-500 ease-in-out overflow-hidden">
+      <div id="html-content">{{ html_content|safe }}</div>
+    </div>
+  </div>
+{% endblock content %}
+{% block body_scripts %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const dropdown = document.getElementById('dropdown');
+      const input = document.getElementById('module_search_input');
+      const hiddenInput = document.getElementById('choose_modules');
+      const selectedModulesContainer = document.getElementById('choose_modules_input');
+      const dropdownSearch = document.getElementById('dropdown_search');
+      const resetButton = document.getElementById('reset-button');
+
+      const hideButton = document.getElementById('hide-button');
+      const unhideButton = document.getElementById('unhide-button');
+      const leftSide = document.getElementById('left-side');
+      const rightSide = document.getElementById('right-side');
+      const htmlContent = document.getElementById('html-content');
+
+      input.addEventListener('focus', function () {
+        dropdown.classList.remove('hidden');
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+          dropdown.classList.add('hidden');
+        }
+      });
+
+      dropdown.querySelectorAll('li').forEach(function (item) {
+        item.addEventListener('click', function () {
+          const value = this.getAttribute('data-value');
+          addModule(value);
+          dropdown.classList.add('hidden');
+        });
+      });
+
+      dropdownSearch.addEventListener('input', function () {
+        const filter = dropdownSearch.value.toLowerCase();
+        dropdown.querySelectorAll('li').forEach(function (item) {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(filter)) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+
+      function addModule(module) {
+        const modules = hiddenInput.value ? hiddenInput.value.split(',') : [];
+        if (!modules.includes(module)) {
+          modules.push(module);
+          hiddenInput.value = modules.join(',');
+
+          const badge = document.createElement('button');
+          badge.type = 'button';
+          badge.className = 'px-1 py-0.5 m-1 mr-2 ml-0 text-sm rounded-md border border-gray-300 flex items-center';
+          badge.innerHTML = `${module} <span class="ml-1 text-xs">&times;</span>`;
+          badge.onclick = function () {
+            removeModule(module);
+          };
+          selectedModulesContainer.insertBefore(badge, input);
+
+          updateBadgeClasses();
+        }
+      }
+
+      window.removeModule = function (module) {
+        const modules = hiddenInput.value.split(',');
+        const index = modules.indexOf(module);
+        if (index > -1) {
+          modules.splice(index, 1);
+          hiddenInput.value = modules.join(',');
+          selectedModulesContainer.querySelectorAll('button').forEach(function (badge) {
+            if (badge.textContent.trim().startsWith(module)) {
+              badge.remove();
+            }
+          });
+
+          updateBadgeClasses();
+        }
+      };
+
+      function updateBadgeClasses() {
+        const badges = selectedModulesContainer.querySelectorAll('button');
+        const containerWidth = selectedModulesContainer.clientWidth;
+        badges.forEach((badge) => {
+          badge.classList.remove('mt-2', 'mb-2');
+        });
+
+        let firstRowTop = badges[0].getBoundingClientRect().top;
+        let lastRowTop = badges[badges.length - 1].getBoundingClientRect().top;
+
+        badges.forEach((badge, index) => {
+          const badgeTop = badge.getBoundingClientRect().top;
+          console.log(index, badgeTop, firstRowTop, lastRowTop);
+          if (Math.abs(badgeTop - firstRowTop) <= 5) {
+            badge.classList.add('mt-2');
+          }
+          if (Math.abs(badgeTop - lastRowTop) <= 5) {
+            badge.classList.add('mb-2');
+          }
+        });
+      }
+
+      // Initialize selected modules from hidden input value
+      const initialModules = hiddenInput.value.split(',');
+      initialModules.forEach(function (module) {
+        if (module) {
+          addModule(module);
+        }
+      });
+
+      const buttons = document.querySelectorAll('.module-btn')
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          button.classList.toggle('rounded-b-none');
+        });
+      });
+
+      resetButton.addEventListener('click', function () {
+        document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {
+          checkbox.checked = true;
+        });
+        input.value = '';
+        hiddenInput.value = '';
+        selectedModulesContainer.querySelectorAll('button').forEach(function (badge) {
+          badge.remove();
+        });
+        document.getElementById("submit-button").click();
+      });
+
+      function hideRightSide() {
+        leftSide.classList.remove('xl:w-1/2');
+        if (window.innerWidth < 1280) {
+          leftSide.classList.remove('hidden');
+        }
+        rightSide.classList.add('opacity-0');
+        rightSide.classList.remove('w-full', 'xl:w-1/2', 'opacity-100');
+        hideButton.classList.add('hidden');
+        unhideButton.classList.remove('hidden');
+      }
+
+      function showRightSide() {
+        leftSide.classList.add('xl:w-1/2');
+        if (window.innerWidth < 1280) {
+          leftSide.classList.add('hidden');
+        }
+        rightSide.classList.remove('opacity-0');
+        rightSide.classList.add('w-full', 'xl:w-1/2', 'opacity-100');
+        hideButton.classList.remove('hidden');
+        unhideButton.classList.add('hidden');
+      }
+
+      hideButton.addEventListener('click', hideRightSide);
+      unhideButton.addEventListener('click', showRightSide);
+      window.addEventListener('resize', () => {
+        if (window.innerWidth < 1280) {
+          hideRightSide();
+        } else{
+          showRightSide();
+        }
+      });
+
+      if (window.innerWidth < 1280) {
+        hideRightSide();
+      }
+
+      updateBadgeClasses();
+    });
+  </script>
+{% endblock body_scripts %}
