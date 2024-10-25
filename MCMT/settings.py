@@ -98,13 +98,17 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 if IS_HEROKU_APP:
+    DATABASE_URL = dj_database_url.config(
+        env="DATABASE_URL",
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True,
+    ),
+
     DATABASES = {
-        "default": dj_database_url.config(
-            env="DATABASE_URL",
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        ),
+        "default": DATABASE_URL,
+        "main": DATABASE_URL,
+        "keywords": DATABASE_URL,
     }
 else: 
     DATABASES = {
