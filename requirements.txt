@@ -39,7 +39,6 @@ packaging==24.1
 pandas==2.2.2
 pathspec==0.12.1
 pillow==10.4.0
-psycopg2-binary==2.9.10
 pyparsing==3.1.2
 python-dateutil==2.9.0.post0
 python-decouple==3.8
@@ -61,3 +60,5 @@ Werkzeug==2.2.3
 whitenoise==6.7.0
 xyzservices==2024.6.0
 zipp==3.20.1
+psycopg[c]; sys_platform == "linux"
+psycopg[binary]; sys_platform != "linux"
