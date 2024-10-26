@@ -5,6 +5,7 @@ from bokeh.plotting import figure, from_networkx
 from bokeh.models import Range1d, MultiLine, Circle, NodesAndLinkedEdges
 from bokeh.palettes import Spectral4, Spectral8
 from .models import Module, Keyword
+from .utils import get_short_module_code
 
 # Parameters
 
@@ -20,11 +21,10 @@ def generate_nx_graph():
     modules = []
     modules_keywords = {}
     for module in pre_modules:
-        keywords = Keyword.objects.get_keywords_for_module(module)
-        keywords = [item['keywords'] for item in keywords]
+        keywords = Keyword.objects.filter(module_code=get_short_module_code(module)).values_list('keywords', flat=True)
         if keywords:
             modules.append(module)
-            modules_keywords[module] = keywords
+            modules_keywords[module] = list(keywords)
 
     df = pd.DataFrame(0, index=modules, columns=modules, dtype=float)
     G = nx.Graph()

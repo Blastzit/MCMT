@@ -10,7 +10,7 @@ class Alumni(models.Model):
     profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
 
     class Meta:
-        db_table = 'alumni'
+        db_table = 'info'
 
     def __str__(self):
         return self.name

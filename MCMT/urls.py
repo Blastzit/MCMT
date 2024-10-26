@@ -28,7 +28,6 @@ urlpatterns = [
     path('degree/', views.degree_view, name='degree'), 
     path('careers/', include('alumni.urls')),
     path('our_team/', views.our_team_view, name='our_team'),
-    path('django_plotly_dash/', include('django_plotly_dash.urls')),
 ]
 
 if settings.DEBUG:

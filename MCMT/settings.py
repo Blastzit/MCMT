@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from decouple import config
 from pathlib import Path
 import os
 import secrets
@@ -51,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'modules',
     'alumni',
-    'django_plotly_dash.apps.DjangoPlotlyDashConfig',  
     'channels',
 ]
 
@@ -63,8 +63,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_plotly_dash.middleware.BaseMiddleware',
-    'django_plotly_dash.middleware.ExternalRedirectionMiddleware',
 ]
 
 ROOT_URLCONF = 'MCMT.urls'
@@ -103,30 +101,39 @@ if IS_HEROKU_APP:
         conn_max_age=600,
         conn_health_checks=True,
         ssl_require=True,
-    ),
-
-    DATABASES = {
-        "default": DATABASE_URL,
-        "main": DATABASE_URL,
-        "keywords": DATABASE_URL,
-    }
-else: 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        },
-        'main': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'main.db',
-        },
-        'keywords': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'keywords.db',
-        },
+    )
+else:
+    DATABASE_URL = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT'),
     }
 
-DATABASE_ROUTERS = ['MCMT.db_routers.MainRouter', 'MCMT.db_routers.KeywordsRouter']
+DATABASES = {
+    'default': {
+        **DATABASE_URL,
+        'OPTIONS': {
+            'options': '-c search_path=public'
+        },
+    },
+    'modules': {
+        **DATABASE_URL,
+        'OPTIONS': {
+            'options': '-c search_path=modules'
+        },
+    },
+    'alumni': {
+        **DATABASE_URL,
+        'OPTIONS': {
+            'options': '-c search_path=alumni'
+        },
+    }
+}
+
+DATABASE_ROUTERS = ['MCMT.db_routers.ModulesRouter', 'MCMT.db_routers.AlumniRouter', 'MCMT.db_routers.DefaultRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
