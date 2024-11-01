@@ -10,9 +10,9 @@
               name="degree"
               class="w-full px-3 py-2 border border-gray-300 rounded-md"
               onChange="form.submit();">
-        {% for description in degree_descriptions.values %}
+        {% for description in degree_list %}
           <option value="{{ description }}"
-                  {% if description == selected_description %}selected{% endif %}>{{ description }}</option>
+                  {% if description|slice:4 == degree %}selected{% endif %}>{{ description }}</option>
         {% endfor %}
       </select>
     </div>
@@ -22,17 +22,19 @@
               name="year"
               class="w-full px-3 py-2 border border-gray-300 rounded-md"
               onChange="form.submit();">
-        <option value="Year 1" {% if year == "Year 1" %}selected{% endif %}>Year 1</option>
-        <option value="Year 2" {% if year == "Year 2" %}selected{% endif %}>Year 2</option>
-        <option value="Year 3" {% if year == "Year 3" %}selected{% endif %}>Year 3</option>
-        <option value="Year 4" {% if year == "Year 4" %}selected{% endif %}>Year 4</option>
+        <option value="Year 1" {% if year == "1" %}selected{% endif %}>Year 1</option>
+        <option value="Year 2" {% if year == "2" %}selected{% endif %}>Year 2</option>
+        <option value="Year 3" {% if year == "3" %}selected{% endif %}>Year 3</option>
+        {% if degree == "G103" or degree == "G104" %}
+          <option value="Year 4" {% if year == "4" %}selected{% endif %}>Year 4</option>
+        {% endif %}
       </select>
     </div>
   </form>
   <div class="mt-6 pt-4 flex flex-wrap lg:flex-nowrap justify-between gap-4 border-t border-gray-300">
     <div class="w-full flex-grow">
-      <h2 class="text-xl font-bold mb-2">{{ degree }} - {{ year }}</h2>
-      <p>{{ guideline }}</p>
+      <h2 class="text-xl font-bold mb-2">{{ degree }} - Year {{ year }}</h2>
+      <p>{{ guideline|safe }}</p>
     </div>
     <div class="w-full lg:w-[500px]">
       <label for="choose_modules"
@@ -44,25 +46,25 @@
              oninput="showSuggestions(this.value)">
     </div>
   </div>
-  {% if year == "Year 2" %}
+  {% if year == "2" %}
     <h3 class="degree-header text-xl font-semibold mt-4">Compulsory Modules</h3>
-    {% include "modules/module_list.html" with modules=degree_info.compulsory_modules %}
+    {% include "modules/module_list.html" with modules=modules.compulsory %}
     <h3 class="degree-header text-xl font-semibold mt-4">Group A Modules</h3>
-    {% include "modules/module_list.html" with modules=degree_info.group_a %}
+    {% include "modules/module_list.html" with modules=modules.group_a %}
     <h3 class="degree-header text-xl font-semibold mt-4">Group B Modules</h3>
-    {% include "modules/module_list.html" with modules=degree_info.group_b %}
-  {% elif year == "Year 4" %}
+    {% include "modules/module_list.html" with modules=modules.group_b highlight=highlight %}
+  {% elif year == "4" %}
     {% if degree == "G103" or degree == "G104" %}
-      {% if degree_info.year_4_modules %}
+      {% if modules.year_4 %}
         <h3 class="degree-header text-xl font-semibold mt-4">Year 4 Only Modules</h3>
-        {% include "modules/module_list.html" with modules=degree_info.year_4_modules %}
+        {% include "modules/module_list.html" with modules=modules.year_4 highlight=highlight %}
       {% endif %}
       <h3 class="degree-header text-xl font-semibold mt-4">Modules for Year 3 and Year 4 Students</h3>
-      {% include "modules/module_list.html" with modules=degree_info.year_3_modules %}
+      {% include "modules/module_list.html" with modules=modules.year_3 highlight=highlight %}
     {% endif %}
   {% else %}
     <h3 class="degree-header text-xl font-semibold mt-4">Modules</h3>
-    {% include "modules/module_list.html" with modules=degree_info.modules %}
+    {% include "modules/module_list.html" with modules=modules.all highlight=highlight %}
   {% endif %}
   <div id="no-result"
        class="hidden p-4 mt-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50"

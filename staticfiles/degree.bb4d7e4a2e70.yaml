@@ -1,0 +1,179 @@
+degrees:
+  ["G100", "G102", "G125", "G1F3", "G1G3", "G1GH", "GG31", "G103", "G104"]
+
+default:
+  year1:
+    guideline: "All modules are compulsory in Year 1."
+  year2:
+    guideline: "Select one module from Group A and four modules from Group B."
+  year3:
+    guideline: "Select modules with a total credit value of 60 or 62.5 ECTS from all modules offered for Year 3 students."
+  year4:
+    guideline: "Select six lectured modules. The Research Project is also compulsory, which is equivalent to two lecture modules."
+
+G100:
+  description: "Mathematics (BSc)"
+
+G102:
+  description: "Mathematics with Mathematical Computation"
+  year2:
+    guideline: "The modules Network Science and Principles of Programming are considered core for this degree coding and must be taken."
+    highlight: ["MATH50007", "MATH50009"]
+  year3:
+    guideline: "Select at least three modules from MATH60022 - MATH60027, MATH60050."
+    highlight:
+      [
+        "MATH60022/70022",
+        "MATH60023/70023",
+        "MATH60024/70024",
+        "MATH60025/70025",
+        "MATH60026/70026",
+        "MATH60027/70027",
+        "MATH60050/70050",
+      ]
+
+G125:
+  description: "Mathematics (Pure Mathematics)"
+  year2:
+    guideline: "The modules Groups and Rings and Lebesgue Measure and Integration are considered core for this degree coding and must be taken."
+    highlight: ["MATH50005", "MATH50006"]
+  year3:
+    guideline: "Select at least five modules from MATH60028 - MATH60042, MATH60140, MATH60050."
+    highlight:
+      [
+        "MATH60028/70028",
+        "MATH60029/70029",
+        "MATH60030/70030",
+        "MATH60031/70031",
+        "MATH60032/70032",
+        "MATH60033/70033",
+        "MATH60034/70034",
+        "MATH60035/70035",
+        "MATH60036/70036",
+        "MATH60037/70037",
+        "MATH60038/70038",
+        "MATH60039/70039",
+        "MATH60040/70040",
+        "MATH60041/70041",
+        "MATH60042/70042",
+        "MATH60140/70140",
+        "MATH60050/70050",
+      ]
+
+G1F3:
+  description: "Mathematics with Applied Mathematics/Mathematical Physics"
+  year2:
+    guideline: "The module Partial Differential Equations in Action is considered core for this degree coding and must be taken."
+    highlight: ["MATH50008"]
+  year3:
+    guideline: "Select at least five modules from MATH60001 - MATH60027, MATH60137, MATH60141, MATH60050."
+    highlight:
+      [
+        "MATH60001/70001",
+        "MATH60002/70002",
+        "MATH60003/70003",
+        "MATH60004/70004",
+        "MATH60005/70005",
+        "MATH60006/70006",
+        "MATH60007/70007",
+        "MATH60008/70008",
+        "MATH60009/70009",
+        "MATH60010/70010",
+        "MATH60011/70011",
+        "MATH60012/70012",
+        "MATH60013/70013",
+        "MATH60014/70014",
+        "MATH60015/70015",
+        "MATH60016/70016",
+        "MATH60017/70017",
+        "MATH60018/70018",
+        "MATH60019/70019",
+        "MATH60020/70020",
+        "MATH60021/70021",
+        "MATH60022/70022",
+        "MATH60023/70023",
+        "MATH60024/70024",
+        "MATH60025/70025",
+        "MATH60026/70026",
+        "MATH60027/70027",
+        "MATH60137/70137",
+        "MATH60141/70141",
+        "MATH60050/70050",
+      ]
+
+G1G3:
+  description: "Mathematics with Statistics"
+  year2:
+    guideline: "The modules Probability for Statistics and Statistical Modelling I are considered core for this degree coding and must be taken."
+    highlight: ["MATH50010", "MATH50011"]
+  year3:
+    guideline: "Select at least five modules from MATH60026, MATH60043 - MATH60049, MATH60139, MATH60050."
+    highlight:
+      [
+        "MATH60026/70026",
+        "MATH60043/70043",
+        "MATH60044/70044",
+        "MATH60045/70045",
+        "MATH60046/70046",
+        "MATH60047/70047",
+        "MATH60048/70048",
+        "MATH60049/70049",
+        "MATH60139/70139",
+        "MATH60050/70050",
+      ]
+
+G1GH:
+  description: "Mathematics with Statistics for Finance"
+  year2:
+    guideline: "The modules Probability for Statistics and Statistical Modelling I are considered core for this degree coding and must be taken."
+    highlight: ["MATH50010", "MATH50011"]
+  year3:
+    guideline: "Select at least six modules from MATH60012, MATH60142, MATH60027, MATH60043 - MATH60049, MATH60130, MATH60138, MATH60050."
+    highlight:
+      [
+        "MATH60012/70012",
+        "MATH60142/70142",
+        "MATH60027/70027",
+        "MATH60043/70043",
+        "MATH60044/70044",
+        "MATH60045/70045",
+        "MATH60046/70046",
+        "MATH60047/70047",
+        "MATH60048/70048",
+        "MATH60049/70049",
+        "MATH60130/70130",
+        "MATH60138/70138",
+        "MATH60050/70050",
+      ]
+
+GG31:
+  description: "Mathematics, Optimisation and Statistics"
+  year2:
+    guideline: "The modules Probability for Statistics and Statistical Modelling I are considered core for this degree coding and must be taken."
+    highlight: ["MATH50010", "MATH50011"]
+  year3:
+    guideline: "Select at least five modules from MATH60005, MATH60024, MATH60027, MATH60043 - MATH60049, MATH60130, MATH60138, MATH60139, MATH60141, MATH60050."
+    highlight:
+      [
+        "MATH60005/70005",
+        "MATH60024/70024",
+        "MATH60027/70027",
+        "MATH60043/70043",
+        "MATH60044/70044",
+        "MATH60045/70045",
+        "MATH60046/70046",
+        "MATH60047/70047",
+        "MATH60048/70048",
+        "MATH60049/70049",
+        "MATH60130/70130",
+        "MATH60138/70138",
+        "MATH60139/70139",
+        "MATH60141/70141",
+        "MATH60050/70050",
+      ]
+
+G103:
+  description: "Mathematics (MSci)"
+
+G104:
+  description: "Mathematics with a Year Abroad (MSci)"

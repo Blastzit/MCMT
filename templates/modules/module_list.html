@@ -37,21 +37,29 @@
           <p class="pb-1">
             <strong>Code:</strong> {{ module.code }}
           </p>
-          <p class="pb-1">
-            <strong>Recommended Prerequisites:</strong> {{ module.recommended_prerequisites }}
-          </p>
-          <p class="pb-1">
-            <strong>Summary:</strong> {{ module.summary }}
-          </p>
+          {% if module.recommended_prerequisites %}
+            <p class="pb-1">
+              <strong>Recommended Prerequisites:</strong> {{ module.recommended_prerequisites }}
+            </p>
+          {% endif %}
+          {% if module.summary %}
+            <p class="pb-1">
+              <strong>Summary:</strong> {{ module.summary }}
+            </p>
+          {% endif %}
           <p class="pb-1">
             <strong>Term:</strong> {{ module.term }}
           </p>
-          <p class="pb-1">
-            <strong>Module Lead(s):</strong> {{ module.lecturer }}
-          </p>
-          <p>
-            <strong>Assessments:</strong> {{ module.assessments }}
-          </p>
+          {% if module.lecturer %}
+            <p class="pb-1">
+              <strong>Module Lead(s):</strong> {{ module.lecturer }}
+            </p>
+          {% endif %}
+          {% if module.assessments %}
+            <p>
+              <strong>Assessments:</strong> {{ module.assessments }}
+            </p>
+          {% endif %}
           {% if module.short_code %}
             <a href="{% url 'module_detail' module.short_code %}"
                class="text-blue-600 font-semibold mt-2 inline-block">More info</a>
@@ -66,7 +74,7 @@
   <div data-accordion="open" data-active-classes="bg-white">
     {% for module in modules %}
       <button type="button"
-              class="module-btn flex items-center justify-between w-full p-4 border border-gray-200 text-gray-500 rounded-xl mt-2 hover:text-blue-500"
+              class="module-btn flex items-center justify-between w-full p-4 border border-gray-200 text-gray-500 rounded-xl mt-2 hover:text-blue-500 {% if module.code in highlight %}border-blue-200 bg-blue-50{% endif %}"
               data-accordion-target="#{{ module.short_code }}"
               aria-expanded="false"
               aria-controls="{{ module.short_code }}">
@@ -101,21 +109,29 @@
           <p class="pb-1">
             <strong>Code:</strong> {{ module.code }}
           </p>
-          <p class="pb-1">
-            <strong>Recommended Prerequisites:</strong> {{ module.recommended_prerequisites }}
-          </p>
-          <p class="pb-1">
-            <strong>Summary:</strong> {{ module.summary }}
-          </p>
+          {% if module.recommended_prerequisites %}
+            <p class="pb-1">
+              <strong>Recommended Prerequisites:</strong> {{ module.recommended_prerequisites }}
+            </p>
+          {% endif %}
+          {% if module.summary %}
+            <p class="pb-1">
+              <strong>Summary:</strong> {{ module.summary }}
+            </p>
+          {% endif %}
           <p class="pb-1">
             <strong>Term:</strong> {{ module.term }}
           </p>
-          <p class="pb-1">
-            <strong>Module Lead(s):</strong> {{ module.lecturer }}
-          </p>
-          <p>
-            <strong>Assessments:</strong> {{ module.assessments }}
-          </p>
+          {% if module.lecturer %}
+            <p class="pb-1">
+              <strong>Module Lead(s):</strong> {{ module.lecturer }}
+            </p>
+          {% endif %}
+          {% if module.assessments %}
+            <p>
+              <strong>Assessments:</strong> {{ module.assessments }}
+            </p>
+          {% endif %}
           {% if module.short_code %}
             <a href="{% url 'module_detail' module.short_code %}"
                class="text-blue-600 font-semibold mt-2 inline-block">More info</a>

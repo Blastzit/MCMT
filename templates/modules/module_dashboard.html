@@ -176,6 +176,7 @@
       const hiddenInput = document.getElementById('choose_modules');
       const selectedModulesContainer = document.getElementById('choose_modules_input');
       const dropdownSearch = document.getElementById('dropdown_search');
+      const keywordSearch = document.getElementById('search_term');
       const resetButton = document.getElementById('reset-button');
 
       const hideButton = document.getElementById('hide-button');
@@ -292,6 +293,7 @@
         });
         input.value = '';
         hiddenInput.value = '';
+        keywordSearch.value = '';
         selectedModulesContainer.querySelectorAll('button').forEach(function (badge) {
           badge.remove();
         });
