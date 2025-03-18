@@ -20,58 +20,85 @@
   </div>
 {% endblock header %}
 {% block content %}
-  <p>
-    <strong>Term:</strong> {{ module.term }}
-  </p>
-  <p>
-    <strong>Module Lead(s):</strong> {{ module.lecturer }}
-  </p>
-  {% if module.summary %}
-    <p>
-      <strong>Summary:</strong> {{ module.summary }}
-    </p>
-  {% endif %}
-  {% if module.learning_outcome %}
-    <p>
-      <strong>Learning Outcome:</strong> {{ module.learning_outcome }}
-    </p>
-  {% endif %}
-  {% if module.module_preparation %}
-    <p>
-      <strong>Module Preparation:</strong> {{ module.module_preparation }}
-    {% endif %}
-    {% if module.assessments %}
-      <p>
-        <strong>Assessments:</strong> {{ module.assessments }}
-      </p>
-      {% if assessments %}
-        <table class="table-auto w-full text-left">
-          <thead>
-            <tr class="border-b-2">
-              <th class="px-4 py-2">Coursework</th>
-              <th class="px-4 py-2">Start Date</th>
-              <th class="px-4 py-2">End Date</th>
-              <th class="px-4 py-2">Value</th>
-              <th class="px-4 py-2">Submit Work To</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for assessment in assessments %}
-              <tr class="border-b">
-                <td class="px-4 py-2">{{ assessment.coursework_name }}</td>
-                <td class="px-4 py-2">{{ assessment.start_date }}</td>
-                <td class="px-4 py-2">{{ assessment.end_date }}</td>
-                <td class="px-4 py-2">{{ assessment.value }}%</td>
-                <td class="px-4 py-2">{{ assessment.submit_work_to }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+  {% if module.summary %}<p>{{ module.summary }}</p>{% endif %}
+  <table class="table-auto w-full text-left mt-2">
+    <tbody>
+      <tr>
+        <td class="align-top py-2">
+          <strong>Term:</strong>
+        </td>
+        <td class="px-4 py-2">{{ module.term }}</td>
+      </tr>
+      <tr>
+        <td class="align-top py-2">
+          <strong>Module Lead(s):</strong>
+        </td>
+        <td class="px-4 py-2">{{ module.lecturer }}</td>
+      </tr>
+      {% if module.learning_outcome %}
+        <tr>
+          <td class="align-top py-2">
+            <strong>Learning Outcome:</strong>
+          </td>
+          <td class="px-4 py-2">
+            <ul class="list-disc list-outside pl-6">
+              {% for outcome in module.learning_outcome %}<li>{{ outcome }}</li>{% endfor %}
+            </ul>
+          </td>
+        </tr>
       {% endif %}
-    {% endif %}
-    {% if module.recommended_prerequisites %}
-      <p>
-        <strong>Recommended Prerequisites:</strong> {{ module.recommended_prerequisites }}
-      </p>
-    {% endif %}
-  {% endblock content %}
+      {% if module.module_preparation %}
+        <tr>
+          <td class="align-top py-2">
+            <strong>Module Preparation:</strong>
+          </td>
+          <td class="px-4 py-2">{{ module.module_preparation }}</td>
+        </tr>
+      {% endif %}
+      {% if module.assessments %}
+        <tr>
+          <td class="align-top py-2">
+            <strong>Assessments:</strong>
+          </td>
+          <td class="px-4 py-2">{{ module.assessments }}</td>
+        </tr>
+        {% if assessments %}
+          <tr>
+            <td colspan="2" class="px-4 py-2">
+              <table class="table-auto w-full text-left">
+                <thead>
+                  <tr class="border-b-2">
+                    <th class="px-4 py-2">Coursework</th>
+                    <th class="px-4 py-2">Start Date</th>
+                    <th class="px-4 py-2">End Date</th>
+                    <th class="px-4 py-2">Value</th>
+                    <th class="px-4 py-2">Submit Work To</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for assessment in assessments %}
+                    <tr class="border-b">
+                      <td class="px-4 py-2">{{ assessment.coursework_name }}</td>
+                      <td class="px-4 py-2">{{ assessment.start_date }}</td>
+                      <td class="px-4 py-2">{{ assessment.end_date }}</td>
+                      <td class="px-4 py-2">{{ assessment.value }}%</td>
+                      <td class="px-4 py-2">{{ assessment.submit_work_to }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        {% endif %}
+      {% endif %}
+      {% if module.recommended_prerequisites %}
+        <tr>
+          <td class="align-top py-2">
+            <strong>Recommended Prerequisites:</strong>
+          </td>
+          <td class="px-4 py-2">{{ module.recommended_prerequisites }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+{% endblock content %}

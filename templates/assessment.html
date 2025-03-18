@@ -44,7 +44,7 @@
     </div>
   </form>
   <!-- Coursework Timetable Table -->
-  <div class="mt-6">
+  {% comment %} <div class="mt-6">
     <h3 class="text-xl font-semibold mb-4">Coursework Deadlines</h3>
     <table class="table-auto w-full text-left">
       <thead>
@@ -70,84 +70,82 @@
         {% endfor %}
       </tbody>
     </table>
-  </div>
+  </div> {% endcomment %}
   <!-- Calendar -->
   <div class="mt-6">
-    <h3 class="text-xl font-semibold mb-4">Coursework Calendar</h3>
+    {% comment %} <h3 class="text-xl font-semibold mb-4">Coursework Calendar</h3> {% endcomment %}
     <div id="calendar"></div>
     <button id="exportCalendarBtn"
             class="mt-4 bg-blue-500 text-white py-2 px-4 rounded">Export to Outlook</button>
-    <button id="printCalendarBtn"
-            class="mt-4 bg-gray-500 text-white py-2 px-4 rounded">Print Calendar</button>
   </div>
 {% endblock content %}
 {% block body_scripts %}
   <script>
-  function filterModules() {
-    const searchValue = document.getElementById('module_search').value.toLowerCase();
-    const moduleItems = document.querySelectorAll('.module-item');
+    function filterModules() {
+      const searchValue = document.getElementById('module_search').value.toLowerCase();
+      const moduleItems = document.querySelectorAll('.module-item');
 
-    moduleItems.forEach(item => {
-      const moduleName = item.dataset.moduleName.toLowerCase();
-      if (moduleName.includes(searchValue)) {
-        item.style.display = 'block';
-      } else {
-        item.style.display = 'none';
+      moduleItems.forEach(item => {
+        const moduleName = item.dataset.moduleName.toLowerCase();
+        if (moduleName.includes(searchValue)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+
+    function showDropdown() {
+      const moduleList = document.getElementById('module_list');
+      moduleList.classList.remove('hidden');
+      moduleList.classList.add('block');
+    }
+
+    // Hide dropdown 
+    document.addEventListener('click', function(event) {
+      const moduleSearch = document.getElementById('module_search');
+      const moduleList = document.getElementById('module_list');
+
+      if (!moduleSearch.contains(event.target) && !moduleList.contains(event.target)) {
+        hideDropdown();
       }
     });
-  }
 
-
-  function showDropdown() {
-    const moduleList = document.getElementById('module_list');
-    moduleList.classList.remove('hidden');
-    moduleList.classList.add('block');
-  }
-
-  // Hide dropdown 
-  document.addEventListener('click', function(event) {
-    const moduleSearch = document.getElementById('module_search');
-    const moduleList = document.getElementById('module_list');
-
-    if (!moduleSearch.contains(event.target) && !moduleList.contains(event.target)) {
-      hideDropdown();
+    function hideDropdown() {
+      const moduleList = document.getElementById('module_list');
+      moduleList.classList.remove('block');
+      moduleList.classList.add('hidden');
     }
-  });
 
-  function hideDropdown() {
-    const moduleList = document.getElementById('module_list');
-    moduleList.classList.remove('block');
-    moduleList.classList.add('hidden');
-  }
+    
+    function selectModule(moduleName) {
+      const selectedModulesDiv = document.getElementById('selected_modules');
 
-  
-  function selectModule(moduleName) {
-    const selectedModulesDiv = document.getElementById('selected_modules');
+      // Prevent duplicate selections
+      if (!document.querySelector(`[value="${moduleName}"]`)) {
+        const selectedModuleSpan = document.createElement('span');
+        selectedModuleSpan.className = 'selected-module py-1 px-2 border border-gray-300 rounded-md inline-flex items-center mr-2 mb-2';
+        selectedModuleSpan.innerHTML = `
+          ${moduleName} <span class="ml-2 cursor-pointer" onclick="removeModule('${moduleName}')">×</span>
+          <input type="hidden" name="module" value="${moduleName}" />
+        `;
+        selectedModulesDiv.appendChild(selectedModuleSpan);
 
-    // Prevent duplicate selections
-    if (!document.querySelector(`[value="${moduleName}"]`)) {
-      const selectedModuleSpan = document.createElement('span');
-      selectedModuleSpan.className = 'selected-module py-1 px-2 border border-gray-300 rounded-md inline-flex items-center mr-2 mb-2';
-      selectedModuleSpan.innerHTML = `
-        ${moduleName} <span class="ml-2 cursor-pointer" onclick="removeModule('${moduleName}')">×</span>
-        <input type="hidden" name="module" value="${moduleName}" />
-      `;
-      selectedModulesDiv.appendChild(selectedModuleSpan);
+        // Hide dropdown 
+        hideDropdown();
 
-      // Hide dropdown 
-      hideDropdown();
+        document.getElementById('assessmentForm').submit();
+      }
+    }
+
+    // Remove module
+    function removeModule(moduleName) {
+      const selectedModuleSpan = document.querySelector(`[value="${moduleName}"]`).parentNode;
+      selectedModuleSpan.remove();
 
       document.getElementById('assessmentForm').submit();
     }
-  }
-
-  // Remove module
-  function removeModule(moduleName) {
-    const selectedModuleSpan = document.querySelector(`[value="${moduleName}"]`).parentNode;
-    selectedModuleSpan.remove();
-
-    document.getElementById('assessmentForm').submit();
-  }
   </script>
   <!-- Calendar related libraries -->
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.css"
@@ -191,11 +189,6 @@
       link.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsData);
       link.download = 'coursework_calendar.ics';
       link.click();
-    });
-
-    // Print calendar 
-    document.getElementById('printCalendarBtn').addEventListener('click', function() {
-      window.print();
     });
 
     // Generate .ics file 

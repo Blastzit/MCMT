@@ -79,7 +79,7 @@ def generate_nx_graph():
     return G
 
 def generate_bokeh_plot(G):
-    HOVER_TOOLTIPS = [("Module", "@index"), ("Name", "@name"), ("Total Weight", "@weight")]
+    HOVER_TOOLTIPS = [("Module", "@name"), ("Code", "@index")]
 
     plot = figure(tooltips=HOVER_TOOLTIPS,
                 tools="pan,wheel_zoom", active_scroll='wheel_zoom', toolbar_location=None,
